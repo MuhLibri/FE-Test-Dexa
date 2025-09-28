@@ -47,12 +47,9 @@ const AttendanceHistory = forwardRef(({ onHistoryLoad }, ref) => {
       }
     } catch (err) {
       console.error('Failed to fetch attendance history:', err);
-      // Since API already handles 404 by returning empty array,
-      // any error reaching here is a real network/server error
       setError('Failed to load attendance history. Please check your connection.');
-      setHistory([]); // Ensure we have empty array even on error
+      setHistory([]);
       
-      // Still notify parent that there's no attendance today
       if (onHistoryLoad) {
         onHistoryLoad(false);
       }

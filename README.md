@@ -1,6 +1,100 @@
 # FE Test Dexa - Authentication & Authorization App
 
-Aplikasi React dengan sistem authentication dan authorization yang memiliki 3 halaman utama: Login, Home, dan Admin Dashboard.
+Aplikasi React dengan sistem authentication dan authorization yang memiliki 3 halaman utama: Login,# Sistem Absensi Karyawan - Frontend
+
+Ini adalah aplikasi frontend untuk sistem manajemen absensi karyawan. Dibangun menggunakan React, aplikasi ini menyediakan antarmuka bagi karyawan untuk melakukan absensi dan bagi admin untuk mengelola data karyawan serta memantau rekap absensi.
+
+## Fitur Utama
+
+### Untuk Karyawan
+- **Login & Autentikasi**: Sistem login aman menggunakan kredensial (Employee ID & Password). Sesi dikelola menggunakan cookie `HttpOnly`.
+- **Dashboard Utama**: Menampilkan informasi pengguna yang sedang login, waktu saat ini (dalam zona waktu WIB), dan status API backend.
+- **Absensi (Clock-in/Clock-out)**: Karyawan dapat melakukan absensi dengan mengambil foto selfie.
+- **Riwayat Absensi Pribadi**: Melihat riwayat absensi pribadi langsung di dashboard.
+
+### Untuk Admin
+- **Dashboard Admin**: Halaman khusus yang hanya dapat diakses oleh pengguna dengan peran 'admin'.
+- **Manajemen Karyawan**:
+  - Menambah karyawan baru.
+  - Mengedit informasi karyawan yang sudah ada.
+  - Melihat daftar semua karyawan.
+- **Rekap Absensi Keseluruhan**:
+  - Melihat riwayat absensi dari semua karyawan dalam satu tampilan.
+  - Fitur filter berdasarkan **ID/Nama Karyawan** dan **Tanggal** untuk memudahkan pencarian.
+  - Melihat foto absensi dari setiap catatan.
+
+## Teknologi yang Digunakan
+
+- **Framework**: [React.js](https://reactjs.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **State Management**: React Context API
+- **Bahasa**: JavaScript (ES6+)
+
+## Prasyarat
+
+- [Node.js](https://nodejs.org/) (versi 18.x atau lebih tinggi direkomendasikan)
+- [npm](https://www.npmjs.com/) (biasanya terinstal bersama Node.js)
+
+## Instalasi dan Setup
+
+1.  **Clone repository ini:**
+    ```bash
+    git clone https://github.com/MuhLibri/FE-Test-Dexa.git
+    cd FE-Test-Dexa
+    ```
+
+2.  **Instal dependensi proyek:**
+    ```bash
+    npm install
+    ```
+
+3.  **Konfigurasi Environment Variable:**
+    - Buat file baru bernama `.env` di root direktori proyek.
+    - Tambahkan variabel berikut ke dalam file `.env` dan sesuaikan nilainya dengan URL backend Anda:
+      ```
+      VITE_API_BASE_URL=http://localhost:3000
+      ```
+
+## Menjalankan Aplikasi
+
+1.  **Menjalankan dalam Mode Development:**
+    Perintah ini akan menjalankan aplikasi dengan hot-reloading, cocok untuk pengembangan.
+    ```bash
+    npm run dev
+    ```
+    Aplikasi akan tersedia di `http://localhost:5173` (atau port lain jika 5173 sudah digunakan).
+
+2.  **Membuat Build untuk Produksi:**
+    Perintah ini akan membuat versi optimis dari aplikasi Anda di dalam folder `dist`.
+    ```bash
+    npm run build
+    ```
+
+3.  **Menjalankan Build Produksi secara Lokal:**
+    Gunakan perintah ini untuk melihat hasil build produksi di lingkungan lokal.
+    ```bash
+    npm run preview
+    ```
+
+## Struktur Proyek
+
+```
+/
+├── public/         # Aset statis
+├── src/
+│   ├── assets/       # Gambar dan aset lainnya
+│   ├── components/   # Komponen React yang dapat digunakan kembali
+│   ├── context/      # React Context untuk state global (misal: AuthContext)
+│   ├── pages/        # Komponen yang berfungsi sebagai halaman (misal: Home, Login)
+│   ├── utils/        # Fungsi bantuan (misal: api.js untuk koneksi backend)
+│   ├── App.jsx       # Komponen utama dan routing
+│   └── main.jsx      # Titik masuk aplikasi
+├── .env            # File environment variable (dibuat manual)
+├── package.json    # Daftar dependensi dan skrip proyek
+└── README.md       # Dokumentasi proyek
+```
+ dan Admin Dashboard.
 
 ## 🚀 Fitur
 

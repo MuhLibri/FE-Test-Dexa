@@ -8,7 +8,7 @@ const Home = () => {
   const { user, logout, hasRole } = useAuth();
   const navigate = useNavigate();
   const [hasAttendanceToday, setHasAttendanceToday] = useState(false);
-  const [historyKey, setHistoryKey] = useState(0); // To force re-render of AttendanceHistory
+  const [historyKey, setHistoryKey] = useState(0);
   const historyRef = useRef(null);
 
   const handleLogout = () => {
@@ -29,7 +29,7 @@ const Home = () => {
   const handleAttendanceSuccess = () => {
     console.log('Attendance success callback triggered - refreshing history');
     setHasAttendanceToday(true);
-    setHistoryKey(prev => prev + 1); // Force refresh of AttendanceHistory
+    setHistoryKey(prev => prev + 1);
     
     // Also call refresh method directly if available
     if (historyRef.current) {

@@ -3,19 +3,15 @@ import { getWIBTimestamp } from './timezone.js';
 
 const API_BASE_URL = env.API_BASE_URL;
 
-// The apiCall function is now simplified for HttpOnly cookie authentication.
 export const apiCall = async (endpoint, options = {}) => {
   try {
     const url = `${API_BASE_URL}${endpoint}`;
     
-    // Base headers. The browser will automatically handle the cookie.
     const headers = {
-      'X-Requested-With': 'XMLHttpRequest', // Optional: For CSRF protection frameworks
+      'X-Requested-With': 'XMLHttpRequest',
       ...options.headers,
     };
 
-    // If body is FormData, let the browser set the Content-Type header.
-    // Otherwise, set it to application/json.
     if (!(options.body instanceof FormData)) {
       headers['Content-Type'] = 'application/json';
     }
@@ -23,7 +19,6 @@ export const apiCall = async (endpoint, options = {}) => {
     const config = {
       ...options,
       headers,
-      // CRUCIAL: This tells the browser to send cookies along with the request.
       credentials: 'include', 
     };
 
@@ -32,13 +27,6 @@ export const apiCall = async (endpoint, options = {}) => {
     
     // Handle unauthorized access
     if (response.status === 401) {
-      // Don't clear storage, just redirect. The AuthContext will handle state.
-      // Avoid hard redirect if possible, let the AuthContext handle the state change
-      // which will trigger a re-render to the login page via ProtectedRoute.
-      // For simplicity in this fix, we'll comment out the redirect to allow for debugging.
-      // if (window.location.pathname !== '/login') {
-      //   window.location.href = '/login';
-      // }
       console.error("Authentication Error: Received 401 Unauthorized. The server rejected the session. Check browser cookies and backend CORS settings.");
       throw new Error('Session expired. Please login again.');
     }
@@ -70,7 +58,7 @@ export const authAPI = {
 
   // This function is called by AuthContext to check if a session cookie is valid
   checkSession: async () => {
-    return apiCall('/auth/check-session'); // Assumes a GET endpoint like /me or /check-session
+    return apiCall('/auth/check-session');
   },
 
   // This function tells the backend to clear the HttpOnly cookie
@@ -91,11 +79,6 @@ export const authAPI = {
       })
     });
   },
-  
-  // You can add more auth endpoints here
-  // logout: async () => apiCall('/auth/logout', { method: 'POST' }),
-  // refresh: async () => apiCall('/auth/refresh', { method: 'POST' }),
-  // profile: async () => apiCall('/auth/profile'),
 };
 
 // Attendance API functions
@@ -119,12 +102,10 @@ export const attendanceAPI = {
     try {
       return await apiCall('/attendances/me');
     } catch (error) {
-      // If 404 or any error, return empty array as default
       if (error.message.includes('404') || error.message.includes('HTTP error! status: 404')) {
         console.log('Attendance history not found, returning empty array');
         return [];
       }
-      // For other errors, still return empty array but log the error
       console.warn('Failed to fetch attendance history:', error.message);
       return [];
     }
@@ -142,13 +123,9 @@ export const attendanceAPI = {
   // Helper function to get photo URL
   getPhotoUrl: (photoPath) => {
     if (!photoPath) return null;
-    // Remove leading slash if present and construct full URL
     const cleanPath = photoPath.startsWith('/') ? photoPath.substring(1) : photoPath;
     return `${API_BASE_URL}/attendances/${cleanPath}`;
   },
-  
-  // You can add more attendance endpoints here  
-  // checkOut: async (photoFile) => { ... },
 };
 
 // Employee API functions
@@ -165,24 +142,12 @@ export const employeeAPI = {
   addEmployee: async (fullEmployeeData) => {
     console.log('Adding new employee with data:', fullEmployeeData);
     try {
-      return await apiCall('/employees/add-employee', {
+      return await apiCall('/employees', {
         method: 'POST',
         body: JSON.stringify(fullEmployeeData)
       });
     } catch (error) {
       console.error('Failed to add new employee:', error);
-      throw error;
-    }
-  },
-  
-  create: async (employeeData) => {
-    try {
-      return await apiCall('/employees', {
-        method: 'POST',
-        body: JSON.stringify(employeeData)
-      });
-    } catch (error) {
-      console.error('Failed to create employee:', error);
       throw error;
     }
   },
