@@ -1,4 +1,4 @@
-# Sistem Absensi Karyawan - Frontend
+# Sistem Absensi dan Manajemen Karyawan - Frontend
 
 Ini adalah aplikasi frontend untuk sistem manajemen absensi karyawan. Dibangun menggunakan React, aplikasi ini menyediakan antarmuka bagi karyawan untuk melakukan absensi dan bagi admin untuk mengelola data karyawan serta memantau rekap absensi.
 
